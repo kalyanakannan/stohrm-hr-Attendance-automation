@@ -107,12 +107,24 @@ class Attendance:
         self.driver.find_element(By.ID,'form_modal_box').find_element_by_link_text('here').click()
         self.setSleep()
         self.driver.find_element(By.ID,'form_modal_box').find_element_by_id('login').click()
+        """
+        start time of the day
+        """
         self.driver.find_element(By.CSS_SELECTOR, 'div.time-picker>ul>li:nth-child(127)').click() #10.30 AM
         self.driver.find_element(By.ID,'form_modal_box').find_element_by_id('logout').click()
+        """
+        end time of the day
+        """
         self.driver.find_element(By.XPATH, ('(//div[@class="time-picker"])[2]')).find_element_by_css_selector('ul>li:nth-child(235)').click() #7.30 PM
         self.driver.find_element(By.ID,'attendance_drpdwn').click()
+        """
+        select work from home as the option
+        """
         self.driver.find_element(By.ID,'attendance_codeSelectBoxItOptions').find_element_by_css_selector('li:nth-child(2)').click()
         self.driver.find_element(By.ID,'remarksSelectBoxItContainer').click()
+        """
+        select others as remark
+        """
         self.driver.find_element(By.ID,'remarksSelectBoxItOptions').find_element_by_css_selector('li:nth-child(4)').click()
         self.driver.find_element(By.NAME,'other_remark').send_keys("work from home")
         self.driver.find_element(By.ID,'submit_att').click()
