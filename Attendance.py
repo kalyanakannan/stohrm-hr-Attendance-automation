@@ -12,7 +12,7 @@ class Attendance:
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
-        self.driver.get("https://compnay-name.stohrm.com/")
+        self.driver.get("https://company-name.stohrm.com/")
         self.user_id='######'
         self.password='#####'
         self.fill_last_month = True
