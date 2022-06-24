@@ -5,14 +5,16 @@ from time import sleep
 
 
 class Attendance:
-
+    """
+    atumation script for marking attendance
+    """
     def __init__(self) -> None:
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
         self.driver.get("https://company-name.stohrm.com/")
-        self.user_id='######'
-        self.password='#######'
+        self.user_id='####'
+        self.password='#####'
         self.fill_last_month = True
         self.staleElement = True
 
@@ -20,6 +22,9 @@ class Attendance:
         sleep(seconds)
 
     def login(self):
+        """
+        login into the hr portal
+        """
         self.driver.find_element(By.ID,"userid").send_keys(self.user_id)
         self.driver.find_element(By.NAME,"logsubmit").click()
         self.driver.find_element(By.ID,"password").send_keys(self.password)
@@ -27,18 +32,26 @@ class Attendance:
         self.setSleep(2)
         """un comment this if you are redirect to already login session issue page
         """
-        #self.driver.find_element(By.NAME,"submit").click()
+        self.driver.find_element(By.NAME,"submit").click()
         self.setSleep(2)
 
     def vaccineModal(self):
+        """_summary_
+        """
         vaccine_modal = self.driver.find_element(By.ID,"vaccine_declare")
         vaccine_modal.find_element(By.CSS_SELECTOR,"button.close").click()
 
     def findMainMenu(self):
+        """
+        find the main menu in current page
+        """
         self.main_menu = self.driver.find_element(By.ID,"main-menu")
         self.setSleep(2)
 
     def GotoAttendance(self):
+        """
+        redirect into the attendance sub menu
+        """
         self.findMainMenu()
         submenus = self.main_menu.find_elements_by_xpath(".//*")
         for li in submenus:
@@ -48,10 +61,16 @@ class Attendance:
         self.main_menu.find_element(By.CSS_SELECTOR,'li.root-level.has-sub.opened>ul>li:nth-child(2)').click()
     
     def findCal(self):
+        """
+        find the calendar section in the page
+        """
         self.findMainMenu()
         self.calendar = self.driver.find_element(By.ID, 'cal')
 
     def GotoPreviousMonth(self):
+        """
+        click on the previous month button on calendar section
+        """
         self.findCal()
         prev_month = self.calendar.find_elements_by_xpath(".//a[@class='ajax_link_cal']")
         print(prev_month)
@@ -59,6 +78,9 @@ class Attendance:
         self.setSleep()
 
     def GotoCurrentMonth(self):
+        """
+        redirect to the current month on calendar section
+        """
         self.findCal()
         prev_month = self.calendar.find_elements_by_xpath(".//a[@class='ajax_link_cal']")
         print(prev_month)
@@ -66,6 +88,11 @@ class Attendance:
         self.setSleep()
     
     def findAbsentCount(self):
+        """
+        find oly absent count from current calendar
+        Returns:
+            dict: collection of absent table row
+        """
         self.setSleep()
         self.findCal()
         totals_rows = self.calendar.find_elements_by_xpath(".//td[@class='absent_class_emp']")
@@ -75,6 +102,9 @@ class Attendance:
         return totals_rows
 
     def fillModal(self):
+        """
+        filling the attendance details like start time, end time and reason
+        """
         self.setSleep()
         self.driver.find_element(By.ID,'form_modal_box').find_element_by_link_text('here').click()
         self.setSleep()
@@ -93,9 +123,13 @@ class Attendance:
         sleep(5)
 
     def stopLastMonthCheck(self):
+        """_summary_
+        """
         self.fill_last_month = False
 
     def MarkLastMonth(self):
+        """_summary_
+        """
         totals_rows=[]
         i=1
         self.count=1
@@ -109,6 +143,8 @@ class Attendance:
             i = i  + 1
     
     def MarkCurrentMonth(self):
+        """_summary_
+        """
         totals_rows=[]
         i=1
         self.GotoCurrentMonth()
@@ -123,19 +159,25 @@ class Attendance:
         
     
     def markAttendance(self):
+        """_summary_
+        """
         self.MarkLastMonth()
         self.MarkCurrentMonth()
         
     def closeDriver(self):
+        """_summary_
+        """
         self.driver.close()
 
 
 def main():
-    attedanceObj = Attendance()
-    attedanceObj.login()
-    attedanceObj.GotoAttendance()
-    attedanceObj.markAttendance()
-    attedanceObj.closeDriver()
+    """_summary_
+    """
+    attendanceObj = Attendance()
+    attendanceObj.login()
+    attendanceObj.GotoAttendance()
+    attendanceObj.markAttendance()
+    attendanceObj.closeDriver()
 
 if __name__ == "__main__":
     main()
