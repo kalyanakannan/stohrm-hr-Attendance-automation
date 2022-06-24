@@ -12,11 +12,10 @@ class Attendance:
         self.driver = webdriver.Chrome()
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
-        self.driver.get("https://company-name.stohrm.com/")
-        self.user_id='####'
-        self.password='#####'
+        self.driver.get("https://simplilearn.stohrm.com/")
+        self.user_id='SLP04371'
+        self.password='7SZeVGyqiT@C7Bj'
         self.fill_last_month = True
-        self.staleElement = True
 
     def setSleep(self,seconds=1):
         sleep(seconds)
@@ -97,7 +96,6 @@ class Attendance:
         self.findCal()
         totals_rows = self.calendar.find_elements_by_xpath(".//td[@class='absent_class_emp']")
         self.count = len(totals_rows)
-        self.staleElement = True
         self.setSleep()
         return totals_rows
 
@@ -133,7 +131,7 @@ class Attendance:
         totals_rows=[]
         i=1
         self.count=1
-        while self.staleElement and i <= self.count:
+        while i <= self.count:
             if self.fill_last_month:
                 self.GotoPreviousMonth()
             totals_rows = self.findAbsentCount()
@@ -149,7 +147,7 @@ class Attendance:
         i=1
         self.GotoCurrentMonth()
         self.count = 1
-        while self.staleElement and i <= self.count:
+        while i <= self.count:
             totals_rows = self.findAbsentCount()
             if totals_rows:
                 totals_rows[0].click()
