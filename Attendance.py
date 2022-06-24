@@ -32,7 +32,7 @@ class Attendance:
         self.setSleep(2)
         """un comment this if you are redirect to already login session issue page
         """
-        self.driver.find_element(By.NAME,"submit").click()
+        #self.driver.find_element(By.NAME,"submit").click()
         self.setSleep(2)
 
     def vaccineModal(self):
